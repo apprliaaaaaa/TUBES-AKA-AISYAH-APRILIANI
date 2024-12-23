@@ -187,23 +187,20 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
     private void hitungPendapatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hitungPendapatanActionPerformed
     
         
-// Ambil tanggal dari JDateChooser
     Date startDate = startDateChooser.getDate();
     Date endDate = endDateChooser.getDate();
 
-    // Validasi input tanggal
     if (startDate == null || endDate == null) {
         JOptionPane.showMessageDialog(this, "Harap pilih tanggal awal dan akhir!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
-
-    // Validasi daftar transaksi
+    
     if (POSApplication.daftarTransaksi.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Tidak ada transaksi yang tersedia untuk dihitung!", "Info", JOptionPane.INFORMATION_MESSAGE);
         return;
     }
 
-    // Menampilkan dialog pilihan metode perhitungan
+   
 String[] options = {"Iteratif", "Rekursif"};
 int choice = JOptionPane.showOptionDialog(
     null,
@@ -216,33 +213,33 @@ int choice = JOptionPane.showOptionDialog(
     options[0]
 );
 // Menggunakan BigInteger untuk totalPendapatan
-BigInteger totalPendapatan = BigInteger.ZERO; // Menggunakan BigInteger
+BigInteger totalPendapatan = BigInteger.ZERO; 
 
-// Pengukuran waktu eksekusi
+
 long startTime, endTime;
 
-// Menggunakan BigInteger
+
 if (choice == 0) { // Iteratif
-    // Mencatat waktu mulai dan selesai
+    
     startTime = System.nanoTime();
     totalPendapatan = POSApplication.hitungPendapatanIteratif(POSApplication.daftarTransaksi, startDate, endDate);
     endTime = System.nanoTime();
 
-    // Menampilkan hasil total pendapatan dalam field
+   
     totalPendapatanField.setText(totalPendapatan.toString() + ": hasil dari iteratif");
 
-    // Menampilkan waktu eksekusi
+    
     POSApplication.printRunningTime("Iteratif", startTime, endTime);
 } else if (choice == 1) { // Rekursif
-    // Mencatat waktu mulai dan selesai
+    
     startTime = System.nanoTime();
     totalPendapatan = POSApplication.hitungPendapatanRekursif(POSApplication.daftarTransaksi, startDate, endDate, 0);
     endTime = System.nanoTime();
 
-    // Menampilkan hasil total pendapatan dalam field
+    
     totalPendapatanField.setText(totalPendapatan.toString() + ": hasil dari rekursif");
 
-    // Menampilkan waktu eksekusi
+  
     POSApplication.printRunningTime("Rekursif", startTime, endTime);
 }
 

@@ -17,11 +17,11 @@ public class POSApplication {
      public static ArrayList<Transaksi> daftarTransaksi = new ArrayList<>();
    
      public static BigInteger hitungPendapatanIteratif(ArrayList<Transaksi> daftarTransaksi, Date startDate, Date endDate) {
-    BigInteger totalPendapatan = BigInteger.ZERO; // Inisialisasi totalPendapatan dengan BigInteger.ZERO
+    BigInteger totalPendapatan = BigInteger.ZERO; 
 
     for (Transaksi transaksi : daftarTransaksi) {
         if (transaksi.getTanggal().compareTo(startDate) >= 0 && transaksi.getTanggal().compareTo(endDate) <= 0) {
-            totalPendapatan = totalPendapatan.add(transaksi.getTotalPendapatan()); // Gunakan add() untuk BigInteger
+            totalPendapatan = totalPendapatan.add(transaksi.getTotalPendapatan()); 
         }
     }
 

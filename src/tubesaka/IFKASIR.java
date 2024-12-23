@@ -128,33 +128,30 @@ public class IFKASIR extends javax.swing.JInternalFrame {
 
     private void hitungTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hitungTotalActionPerformed
       try {
-    // Ambil data dari field
+    
     String namaBarang = namaBarangField.getText();
-    BigInteger jumlah = new BigInteger(jumlahField.getText()); // Menggunakan BigInteger untuk jumlah
-    BigInteger harga = new BigInteger(hargaField.getText());   // Menggunakan BigInteger untuk harga
+    BigInteger jumlah = new BigInteger(jumlahField.getText()); 
+    BigInteger harga = new BigInteger(hargaField.getText());  
 
-    // Perhitungan total dengan BigInteger
-    BigInteger total = jumlah.multiply(harga); // Menggunakan multiply untuk BigInteger
+   
+    BigInteger total = jumlah.multiply(harga); 
 
-    // Gunakan tanggal saat ini untuk transaksi
-    Date tanggalTransaksi = new Date(); // Tanggal saat ini
-
-    // Tambahkan transaksi ke daftar
+    Date tanggalTransaksi = new Date(); 
+  
     POSApplication.daftarTransaksi.add(new Transaksi(namaBarang, harga, jumlah, tanggalTransaksi));
 
-    // Tampilkan pesan sukses
     JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
 
-    // Perbarui total pada field
-    totalField.setText("Total: " + total.toString()); // Mengonversi BigInteger menjadi string untuk ditampilkan
+   
+    totalField.setText("Total: " + total.toString()); 
 
-    // Reset field input
+  
     namaBarangField.setText("");
     jumlahField.setText("");
     hargaField.setText("");
 
 } catch (NumberFormatException e) {
-    // Tampilkan pesan error jika input tidak valid
+ 
     JOptionPane.showMessageDialog(this, "Masukkan input yang valid!", "Error", JOptionPane.ERROR_MESSAGE);
 }
 

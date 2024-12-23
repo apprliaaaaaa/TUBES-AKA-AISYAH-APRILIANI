@@ -25,13 +25,13 @@ public class Transaksi {
         this.tanggalTransaksi = tanggalTransaksi;
     }
 
-    // Konstruktor lain yang tidak digunakan di sini, tetapi perlu ditangani atau dihapus
+   
     Transaksi(String namaBarang, int harga, int jumlah, String tanggalTransaksi) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     Transaksi(String namaBarang, int harga, int jumlah, Date tanggalTransaksi) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     public String getNamaBarang() {
@@ -50,9 +50,9 @@ public class Transaksi {
         return tanggalTransaksi;
     }
 
-    // Perbaikan pada metode getTotalPendapatan menggunakan multiply
+   
     public BigInteger getTotalPendapatan() {
-        return hargaBarang.multiply(jumlahBarang); // Menggunakan multiply() untuk BigInteger
+        return hargaBarang.multiply(jumlahBarang);
     }
 }
 
