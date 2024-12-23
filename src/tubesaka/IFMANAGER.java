@@ -198,7 +198,7 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
     String start = sdf.format(startDate);
     String end = sdf.format(endDate);
 
-    // Menghitung total pendapatan secara rekursif
+    
     int totalPendapatan = POSApplication.hitungPendapatanRekursif(POSApplication.daftarTransaksi, 0, start, end);
 
     if (totalPendapatan > 0) {
@@ -210,7 +210,7 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
 
     private void btnTotalTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalTransaksiActionPerformed
 
-      // Menampilkan dialog pilihan untuk metode perhitungan
+      
     String[] options = {"Iteratif", "Rekursif"};
     int choice = JOptionPane.showOptionDialog(
         null,
@@ -223,10 +223,10 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
         options[0]
     );
 
-    // Variabel untuk menampung hasil perhitungan
+   
     int totalTransaksi = 0;
 
-    // Eksekusi berdasarkan pilihan pengguna
+    
     if (choice == 0) { // Iteratif
         totalTransaksi = POSApplication.hitungTotalTransaksiIteratif(POSApplication.daftarTransaksi);
         totalPendapatanField.setText("" + totalTransaksi + "  : hasil dari iteratif");
@@ -235,7 +235,7 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
         totalPendapatanField.setText("" + totalTransaksi + "  : hasil dari rekursif");
     }
 
-    // Tampilkan hasil pada TextField
+   
     
     }//GEN-LAST:event_btnTotalTransaksiActionPerformed
 
