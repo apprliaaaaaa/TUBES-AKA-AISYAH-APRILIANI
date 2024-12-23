@@ -6,6 +6,7 @@
 package tubesaka;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -13,59 +14,57 @@ import java.util.ArrayList;
  */
 public class POSApplication {
      public static ArrayList<Transaksi> daftarTransaksi = new ArrayList<>();
-   public static int hitungPendapatanRekursif(ArrayList<Transaksi> daftar, int index, String start, String end) {
-  
-    if (index >= daftar.size()) {
-        return 0;
-    }
-
-    
-    Transaksi transaksi = daftar.get(index);
-
-    
-    if (transaksi.getTanggalTransaksi().compareTo(start) >= 0 &&
-        transaksi.getTanggalTransaksi().compareTo(end) <= 0) {
-        return transaksi.getTotalPendapatan() + 
-               hitungPendapatanRekursif(daftar, index + 1, start, end);
-    } else {
-        
-        return hitungPendapatanRekursif(daftar, index + 1, start, end);
-    }
-}
-   public static int hitungTotalTransaksi(ArrayList<Transaksi> daftarTransaksi) {
-    int total = 0;
-
    
-    for (Transaksi transaksi : daftarTransaksi) {
-        total++; 
-    }
+     public static int hitungPendapatanIteratif(ArrayList<Transaksi> daftarTransaksi, Date startDate, Date endDate) {
+        int totalPendapatan = 0;
 
-    return total;
-}
-   
+        for (Transaksi transaksi : daftarTransaksi) {
+            if (transaksi.getTanggal().compareTo(startDate) >= 0 && transaksi.getTanggal().compareTo(endDate) <= 0) {
+                totalPendapatan += transaksi.getJumlahBarang();
+            }
+        }
+
+        return totalPendapatan;
+    }
+    
+    public static int hitungPendapatanRekursif(ArrayList<Transaksi> daftarTransaksi, Date startDate, Date endDate, int index) {
+        if (index == daftarTransaksi.size()) {
+            return 0;
+        }
+
+        Transaksi transaksi = daftarTransaksi.get(index);
+        int pendapatanSaatIni = 0;
+
+        if (transaksi.getTanggal().compareTo(startDate) >= 0 && transaksi.getTanggal().compareTo(endDate) <= 0) {
+            pendapatanSaatIni = transaksi.getJumlahBarang();
+        }
+
+        return pendapatanSaatIni + hitungPendapatanRekursif(daftarTransaksi, startDate, endDate, index + 1);
+    }
+    
+    public static void printRunningTime(String metode, long startTime, long endTime) {
+        long duration = endTime - startTime; // Durasi dalam nanodetik
+        System.out.println("Waktu eksekusi (" + metode + "): " + duration + " nanodetik");
+    }
+    
    public static int hitungTotalTransaksiIteratif(ArrayList<Transaksi> daftarTransaksi) {
     int total = 0;
-
-    
     for (Transaksi transaksi : daftarTransaksi) {
         total++; 
     }
-
     return total;
 }
    
    public static int hitungTotalTransaksiRekursif(ArrayList<Transaksi> daftarTransaksi, int index) {
- 
     if (index == daftarTransaksi.size()) {
         return 0;
     }
-
     return 1 + hitungTotalTransaksiRekursif(daftarTransaksi, index + 1);
 }
    
-
     public static void main(String[] args) {
         KF.MainMenu.setVisible(true);
+        
     }
    
 }
