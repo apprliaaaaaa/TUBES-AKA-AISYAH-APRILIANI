@@ -9,37 +9,52 @@ package tubesaka;
  *
  * @author dell
  */
+import java.util.Date;
+import java.math.BigInteger;
+
 public class Transaksi {
     private String namaBarang;
-    private int hargaBarang;
-    private int jumlahBarang;
-    private String tanggalTransaksi;
+    private BigInteger hargaBarang;
+    private BigInteger jumlahBarang;
+    private Date tanggalTransaksi;
 
-    public Transaksi(String namaBarang, int hargaBarang, int jumlahBarang, String tanggalTransaksi) {
+    public Transaksi(String namaBarang, BigInteger hargaBarang, BigInteger jumlahBarang, Date tanggalTransaksi) {
         this.namaBarang = namaBarang;
         this.hargaBarang = hargaBarang;
         this.jumlahBarang = jumlahBarang;
         this.tanggalTransaksi = tanggalTransaksi;
     }
 
+    // Konstruktor lain yang tidak digunakan di sini, tetapi perlu ditangani atau dihapus
+    Transaksi(String namaBarang, int harga, int jumlah, String tanggalTransaksi) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    Transaksi(String namaBarang, int harga, int jumlah, Date tanggalTransaksi) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getNamaBarang() {
         return namaBarang;
     }
 
-    public int getHargaBarang() {
+    public BigInteger getHargaBarang() {
         return hargaBarang;
     }
 
-    public int getJumlahBarang() {
+    public BigInteger getJumlahBarang() {
         return jumlahBarang;
     }
 
-    public String getTanggalTransaksi() {
+    public Date getTanggal() {
         return tanggalTransaksi;
     }
 
-    public int getTotalPendapatan() {
-        return hargaBarang * jumlahBarang;
+    // Perbaikan pada metode getTotalPendapatan menggunakan multiply
+    public BigInteger getTotalPendapatan() {
+        return hargaBarang.multiply(jumlahBarang); // Menggunakan multiply() untuk BigInteger
     }
 }
+
+
 

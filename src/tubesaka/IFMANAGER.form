@@ -76,15 +76,15 @@
                           <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="hitungPendapatan" alignment="0" pref="154" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="hitungPendapatan" alignment="0" pref="405" max="32767" attributes="0"/>
+                          <Component id="btnTotalTransaksi" alignment="0" max="32767" attributes="0"/>
+                          <Component id="endDateChooser" alignment="0" max="32767" attributes="0"/>
+                          <Component id="startDateChooser" alignment="0" max="32767" attributes="0"/>
                           <Component id="totalPendapatanField" alignment="0" max="32767" attributes="0"/>
-                          <Component id="endDateChooser" alignment="1" max="32767" attributes="0"/>
-                          <Component id="startDateChooser" alignment="1" max="32767" attributes="0"/>
-                          <Component id="btnTotalTransaksi" alignment="0" pref="154" max="32767" attributes="0"/>
                           <Component id="totalPendapatanField1" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="199" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="238" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>

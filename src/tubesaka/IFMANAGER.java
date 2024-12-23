@@ -6,6 +6,7 @@
 package tubesaka;
 
 import com.toedter.calendar.JDateChooser;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JFormattedTextField;
@@ -111,14 +112,14 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel9))
                 .addGap(18, 18, 18)
-                .addGroup(PANELKONTENLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(hitungPendapatan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                    .addComponent(totalPendapatanField, javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PANELKONTENLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(hitungPendapatan, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+                    .addComponent(btnTotalTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(endDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(startDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnTotalTransaksi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                    .addComponent(totalPendapatanField1, javax.swing.GroupLayout.Alignment.LEADING))
-                .addContainerGap(199, Short.MAX_VALUE))
+                    .addComponent(totalPendapatanField)
+                    .addComponent(totalPendapatanField1))
+                .addGap(238, 238, 238))
             .addGroup(PANELKONTENLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -184,28 +185,72 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void hitungPendapatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hitungPendapatanActionPerformed
-
- 
+    
+        
+// Ambil tanggal dari JDateChooser
     Date startDate = startDateChooser.getDate();
     Date endDate = endDateChooser.getDate();
 
+    // Validasi input tanggal
     if (startDate == null || endDate == null) {
-        totalPendapatanField.setText("Pilih tanggal valid!");
+        JOptionPane.showMessageDialog(this, "Harap pilih tanggal awal dan akhir!", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    String start = sdf.format(startDate);
-    String end = sdf.format(endDate);
+    // Validasi daftar transaksi
+    if (POSApplication.daftarTransaksi.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Tidak ada transaksi yang tersedia untuk dihitung!", "Info", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    // Menampilkan dialog pilihan metode perhitungan
+String[] options = {"Iteratif", "Rekursif"};
+int choice = JOptionPane.showOptionDialog(
+    null,
+    "Pilih metode perhitungan total pendapatan:",
+    "Metode Perhitungan",
+    JOptionPane.DEFAULT_OPTION,
+    JOptionPane.INFORMATION_MESSAGE,
+    null,
+    options,
+    options[0]
+);
+// Menggunakan BigInteger untuk totalPendapatan
+BigInteger totalPendapatan = BigInteger.ZERO; // Menggunakan BigInteger
+
+// Pengukuran waktu eksekusi
+long startTime, endTime;
+
+// Menggunakan BigInteger
+if (choice == 0) { // Iteratif
+    // Mencatat waktu mulai dan selesai
+    startTime = System.nanoTime();
+    totalPendapatan = POSApplication.hitungPendapatanIteratif(POSApplication.daftarTransaksi, startDate, endDate);
+    endTime = System.nanoTime();
+
+    // Menampilkan hasil total pendapatan dalam field
+    totalPendapatanField.setText(totalPendapatan.toString() + ": hasil dari iteratif");
+
+    // Menampilkan waktu eksekusi
+    POSApplication.printRunningTime("Iteratif", startTime, endTime);
+} else if (choice == 1) { // Rekursif
+    // Mencatat waktu mulai dan selesai
+    startTime = System.nanoTime();
+    totalPendapatan = POSApplication.hitungPendapatanRekursif(POSApplication.daftarTransaksi, startDate, endDate, 0);
+    endTime = System.nanoTime();
+
+    // Menampilkan hasil total pendapatan dalam field
+    totalPendapatanField.setText(totalPendapatan.toString() + ": hasil dari rekursif");
+
+    // Menampilkan waktu eksekusi
+    POSApplication.printRunningTime("Rekursif", startTime, endTime);
+}
+
 
     
-    int totalPendapatan = POSApplication.hitungPendapatanRekursif(POSApplication.daftarTransaksi, 0, start, end);
-
-    if (totalPendapatan > 0) {
-        totalPendapatanField.setText("Rp " + totalPendapatan);
-    } else {
-        totalPendapatanField.setText("Tidak ada pendapatan.");
-    }
+    
+ 
+    
     }//GEN-LAST:event_hitungPendapatanActionPerformed
 
     private void btnTotalTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalTransaksiActionPerformed
@@ -229,10 +274,10 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
     
     if (choice == 0) { // Iteratif
         totalTransaksi = POSApplication.hitungTotalTransaksiIteratif(POSApplication.daftarTransaksi);
-        totalPendapatanField.setText("" + totalTransaksi + "  : hasil dari iteratif");
+        totalPendapatanField1.setText("" + totalTransaksi + "  : hasil dari iteratif");
     } else if (choice == 1) { // Rekursif
         totalTransaksi = POSApplication.hitungTotalTransaksiRekursif(POSApplication.daftarTransaksi, 0);
-        totalPendapatanField.setText("" + totalTransaksi + "  : hasil dari rekursif");
+        totalPendapatanField1.setText("" + totalTransaksi + "  : hasil dari rekursif");
     }
 
    

@@ -5,6 +5,7 @@
  */
 package tubesaka;
 
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -126,25 +127,38 @@ public class IFKASIR extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void hitungTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hitungTotalActionPerformed
-       try {
-        String namaBarang = namaBarangField.getText();
-        int jumlah = Integer.parseInt(jumlahField.getText());
-        int harga = Integer.parseInt(hargaField.getText());
-        int total = jumlah * harga;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String tanggalTransaksi = sdf.format(new Date()); // Tanggal saat ini
-        POSApplication.daftarTransaksi.add(new Transaksi(namaBarang, harga, jumlah, tanggalTransaksi));
+      try {
+    // Ambil data dari field
+    String namaBarang = namaBarangField.getText();
+    BigInteger jumlah = new BigInteger(jumlahField.getText()); // Menggunakan BigInteger untuk jumlah
+    BigInteger harga = new BigInteger(hargaField.getText());   // Menggunakan BigInteger untuk harga
 
+    // Perhitungan total dengan BigInteger
+    BigInteger total = jumlah.multiply(harga); // Menggunakan multiply untuk BigInteger
+
+    // Gunakan tanggal saat ini untuk transaksi
+    Date tanggalTransaksi = new Date(); // Tanggal saat ini
+
+    // Tambahkan transaksi ke daftar
+    POSApplication.daftarTransaksi.add(new Transaksi(namaBarang, harga, jumlah, tanggalTransaksi));
+
+    // Tampilkan pesan sukses
     JOptionPane.showMessageDialog(this, "Data berhasil disimpan!");
-        
-        
-        totalField.setText("Total: " + total);
-        namaBarangField.setText("");
-         jumlahField.setText("");
-          hargaField.setText("");
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Masukkan input yang valid!", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+
+    // Perbarui total pada field
+    totalField.setText("Total: " + total.toString()); // Mengonversi BigInteger menjadi string untuk ditampilkan
+
+    // Reset field input
+    namaBarangField.setText("");
+    jumlahField.setText("");
+    hargaField.setText("");
+
+} catch (NumberFormatException e) {
+    // Tampilkan pesan error jika input tidak valid
+    JOptionPane.showMessageDialog(this, "Masukkan input yang valid!", "Error", JOptionPane.ERROR_MESSAGE);
+}
+
+
     }//GEN-LAST:event_hitungTotalActionPerformed
 
 

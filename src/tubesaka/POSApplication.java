@@ -5,6 +5,7 @@
  */
 package tubesaka;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,35 +16,36 @@ import java.util.Date;
 public class POSApplication {
      public static ArrayList<Transaksi> daftarTransaksi = new ArrayList<>();
    
-     public static int hitungPendapatanIteratif(ArrayList<Transaksi> daftarTransaksi, Date startDate, Date endDate) {
-        int totalPendapatan = 0;
+     public static BigInteger hitungPendapatanIteratif(ArrayList<Transaksi> daftarTransaksi, Date startDate, Date endDate) {
+    BigInteger totalPendapatan = BigInteger.ZERO; // Inisialisasi totalPendapatan dengan BigInteger.ZERO
 
-        for (Transaksi transaksi : daftarTransaksi) {
-            if (transaksi.getTanggal().compareTo(startDate) >= 0 && transaksi.getTanggal().compareTo(endDate) <= 0) {
-                totalPendapatan += transaksi.getJumlahBarang();
-            }
-        }
-
-        return totalPendapatan;
-    }
-    
-    public static int hitungPendapatanRekursif(ArrayList<Transaksi> daftarTransaksi, Date startDate, Date endDate, int index) {
-        if (index == daftarTransaksi.size()) {
-            return 0;
-        }
-
-        Transaksi transaksi = daftarTransaksi.get(index);
-        int pendapatanSaatIni = 0;
-
+    for (Transaksi transaksi : daftarTransaksi) {
         if (transaksi.getTanggal().compareTo(startDate) >= 0 && transaksi.getTanggal().compareTo(endDate) <= 0) {
-            pendapatanSaatIni = transaksi.getJumlahBarang();
+            totalPendapatan = totalPendapatan.add(transaksi.getTotalPendapatan()); // Gunakan add() untuk BigInteger
         }
-
-        return pendapatanSaatIni + hitungPendapatanRekursif(daftarTransaksi, startDate, endDate, index + 1);
     }
+
+    return totalPendapatan; 
+}
+    
+   public static BigInteger hitungPendapatanRekursif(ArrayList<Transaksi> daftarTransaksi, Date startDate, Date endDate, int index) {
+    if (index == daftarTransaksi.size()) {
+        return BigInteger.ZERO;
+    }
+
+    Transaksi transaksi = daftarTransaksi.get(index);
+    BigInteger pendapatanSaatIni = BigInteger.ZERO; 
+
+    if (transaksi.getTanggal().compareTo(startDate) >= 0 && transaksi.getTanggal().compareTo(endDate) <= 0) {
+        pendapatanSaatIni = transaksi.getTotalPendapatan(); 
+    }
+
+    
+    return pendapatanSaatIni.add(hitungPendapatanRekursif(daftarTransaksi, startDate, endDate, index + 1)); 
+}
     
     public static void printRunningTime(String metode, long startTime, long endTime) {
-        long duration = endTime - startTime; // Durasi dalam nanodetik
+        long duration = endTime - startTime; 
         System.out.println("Waktu eksekusi (" + metode + "): " + duration + " nanodetik");
     }
     
