@@ -8,9 +8,19 @@ package tubesaka;
 import com.toedter.calendar.JDateChooser;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 
 /**
  *
@@ -44,9 +54,9 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
         hitungPendapatan = new rojeru_san.RSButton();
         endDateChooser = new com.toedter.calendar.JDateChooser();
         startDateChooser = new com.toedter.calendar.JDateChooser();
-        btnTotalTransaksi = new rojeru_san.RSButton();
         totalPendapatanField1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        btnTampilkanGrafik = new rojeru_san.RSButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -85,25 +95,27 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
             }
         });
 
-        btnTotalTransaksi.setBackground(new java.awt.Color(213, 227, 201));
-        btnTotalTransaksi.setText("Total Transaksi");
-        btnTotalTransaksi.setColorHover(new java.awt.Color(153, 153, 153));
-        btnTotalTransaksi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTotalTransaksiActionPerformed(evt);
-            }
-        });
-
         totalPendapatanField1.setEditable(false);
 
         jLabel9.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(136, 148, 148));
         jLabel9.setText("Total Pendapatan");
 
+        btnTampilkanGrafik.setBackground(new java.awt.Color(213, 227, 201));
+        btnTampilkanGrafik.setText("LihatGrafik");
+        btnTampilkanGrafik.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTampilkanGrafikActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PANELKONTENLayout = new javax.swing.GroupLayout(PANELKONTEN);
         PANELKONTEN.setLayout(PANELKONTENLayout);
         PANELKONTENLayout.setHorizontalGroup(
             PANELKONTENLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PANELKONTENLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(PANELKONTENLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(PANELKONTENLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,16 +125,13 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
                     .addComponent(jLabel9))
                 .addGap(18, 18, 18)
                 .addGroup(PANELKONTENLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTampilkanGrafik, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(hitungPendapatan, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
-                    .addComponent(btnTotalTransaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(endDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(startDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(totalPendapatanField)
                     .addComponent(totalPendapatanField1))
                 .addGap(238, 238, 238))
-            .addGroup(PANELKONTENLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PANELKONTENLayout.setVerticalGroup(
             PANELKONTENLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,9 +157,9 @@ public class IFMANAGER extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(hitungPendapatan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnTotalTransaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnTampilkanGrafik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -214,21 +223,13 @@ int choice = JOptionPane.showOptionDialog(
 );
 // Menggunakan BigInteger untuk totalPendapatan
 BigInteger totalPendapatan = BigInteger.ZERO; 
-
-
 long startTime, endTime;
-
-
 if (choice == 0) { // Iteratif
     
     startTime = System.nanoTime();
     totalPendapatan = POSApplication.hitungPendapatanIteratif(POSApplication.daftarTransaksi, startDate, endDate);
     endTime = System.nanoTime();
-
-   
     totalPendapatanField.setText(totalPendapatan.toString() + ": hasil dari iteratif");
-
-    
     POSApplication.printRunningTime("Iteratif", startTime, endTime);
 } else if (choice == 1) { // Rekursif
     
@@ -236,10 +237,7 @@ if (choice == 0) { // Iteratif
     totalPendapatan = POSApplication.hitungPendapatanRekursif(POSApplication.daftarTransaksi, startDate, endDate, 0);
     endTime = System.nanoTime();
 
-    
     totalPendapatanField.setText(totalPendapatan.toString() + ": hasil dari rekursif");
-
-  
     POSApplication.printRunningTime("Rekursif", startTime, endTime);
 }
 
@@ -250,45 +248,27 @@ if (choice == 0) { // Iteratif
     
     }//GEN-LAST:event_hitungPendapatanActionPerformed
 
-    private void btnTotalTransaksiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalTransaksiActionPerformed
-
-      
-    String[] options = {"Iteratif", "Rekursif"};
-    int choice = JOptionPane.showOptionDialog(
-        null,
-        "Pilih metode perhitungan total transaksi:",
-        "Metode Perhitungan",
-        JOptionPane.DEFAULT_OPTION,
-        JOptionPane.INFORMATION_MESSAGE,
-        null,
-        options,
-        options[0]
-    );
-
-   
-    int totalTransaksi = 0;
-
-    
-    if (choice == 0) { // Iteratif
-        totalTransaksi = POSApplication.hitungTotalTransaksiIteratif(POSApplication.daftarTransaksi);
-        totalPendapatanField1.setText("" + totalTransaksi + "  : hasil dari iteratif");
-    } else if (choice == 1) { // Rekursif
-        totalTransaksi = POSApplication.hitungTotalTransaksiRekursif(POSApplication.daftarTransaksi, 0);
-        totalPendapatanField1.setText("" + totalTransaksi + "  : hasil dari rekursif");
-    }
-
-   
-    
-    }//GEN-LAST:event_btnTotalTransaksiActionPerformed
-
     private void totalPendapatanFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalPendapatanFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_totalPendapatanFieldActionPerformed
+    private javax.swing.JPanel grafikPanel;
+    private void btnTampilkanGrafikActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTampilkanGrafikActionPerformed
+   btnTampilkanGrafik.addActionListener(e -> {
+  
+    int size = 1000; // Anda bisa menyesuaikan ukuran
+    POSApplication.generateData(size);
+
+    // Tampilkan grafik
+    POSApplication.tampilkanGrafikLineChart();
+});
+
+
+    }//GEN-LAST:event_btnTampilkanGrafikActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PANELKONTEN;
-    private rojeru_san.RSButton btnTotalTransaksi;
+    private rojeru_san.RSButton btnTampilkanGrafik;
     private com.toedter.calendar.JDateChooser endDateChooser;
     private rojeru_san.RSButton hitungPendapatan;
     private javax.swing.JLabel jLabel5;

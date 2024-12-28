@@ -68,6 +68,10 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel5" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="42" pref="42" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -77,18 +81,14 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnTampilkanGrafik" max="32767" attributes="0"/>
                           <Component id="hitungPendapatan" alignment="0" pref="405" max="32767" attributes="0"/>
-                          <Component id="btnTotalTransaksi" alignment="0" max="32767" attributes="0"/>
                           <Component id="endDateChooser" alignment="0" max="32767" attributes="0"/>
                           <Component id="startDateChooser" alignment="0" max="32767" attributes="0"/>
                           <Component id="totalPendapatanField" alignment="0" max="32767" attributes="0"/>
                           <Component id="totalPendapatanField1" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="238" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel5" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -121,9 +121,9 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="hitungPendapatan" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnTotalTransaksi" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnTampilkanGrafik" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="22" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -200,20 +200,6 @@
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="startDateChooser">
             </Component>
-            <Component class="rojeru_san.RSButton" name="btnTotalTransaksi">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="c9" green="e3" red="d5" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Total Transaksi"/>
-                <Property name="colorHover" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="99" green="99" red="99" type="rgb"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTotalTransaksiActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JTextField" name="totalPendapatanField1">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
@@ -229,6 +215,17 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Total Pendapatan"/>
               </Properties>
+            </Component>
+            <Component class="rojeru_san.RSButton" name="btnTampilkanGrafik">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="c9" green="e3" red="d5" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="LihatGrafik"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTampilkanGrafikActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

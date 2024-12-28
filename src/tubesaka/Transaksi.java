@@ -25,14 +25,6 @@ public class Transaksi {
         this.tanggalTransaksi = tanggalTransaksi;
     }
 
-   
-    Transaksi(String namaBarang, int harga, int jumlah, String tanggalTransaksi) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    Transaksi(String namaBarang, int harga, int jumlah, Date tanggalTransaksi) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
 
     public String getNamaBarang() {
         return namaBarang;
@@ -52,9 +44,13 @@ public class Transaksi {
 
    
     public BigInteger getTotalPendapatan() {
-        return hargaBarang.multiply(jumlahBarang);
+    BigInteger harga = (hargaBarang != null) ? hargaBarang : BigInteger.ZERO;
+    BigInteger jumlah = (jumlahBarang != null) ? jumlahBarang : BigInteger.ZERO;
+    return  harga.multiply(jumlah);
+
     }
 }
+
 
 
 
